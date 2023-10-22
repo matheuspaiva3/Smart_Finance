@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recomendações de Ativos</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="/images/logo.svg" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Adicione estilização conforme sua preferência aqui */
+    </style>
+</head>
+
+<body>
+    <div class="page2">
+        <header>
+            <div class="header2">
+                <img src="images/logo.svg" alt="logo do site" />
+                <div class="name">Smart Finance</div>
+            </div>
+        </header>
+        <form id="my-form">
+            <fieldset>
+                <div class="fieldset-wrapper">
+                    <legend>Recomendações de Ativos</legend>
+                    <div id="recommendations"></div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    <script>
+        fetch('/predictions')
+        .then(response => response.json())
+        .then(data => {
+            let content = "";
+            for (let symbol in data) {
+                content += `<p>${symbol}BRL: ${data[symbol]}</p>`;
+            }
+            document.getElementById('recommendations').innerHTML = content;
+        });
+    </script>
+</body>
+
+</html>

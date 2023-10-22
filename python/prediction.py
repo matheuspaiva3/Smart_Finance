@@ -1,109 +1,110 @@
-import pandas as pd
-from data_processing import prepare_data
-from models_tests import *
-from tuned_models_tests import *
-from save_models import *
+from data_processing import prepare_data, get_symbols
+from models_tuning import tune_all_models
+from models_tests import evaluate_tuned_models
+import logging
+import numpy as np
+from scipy.stats import norm
+from models_tests import evaluate_model
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.svm import SVR
+from scipy.stats import norm
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+def get_confidence_interval(predictions, actuals, alpha=0.05):
+    residuals = actuals - predictions
+    residual_std = np.std(residuals)
+    return predictions - norm.ppf(1 - alpha/2) * residual_std, predictions + norm.ppf(1 - alpha/2) * residual_std
+
+def ensemble_decision(predictions, scores, test_y):
+    buy_votes = 0
+    valid_models = 0
+
+    for model_name, pred in predictions.items():
+        # Ignora modelos com R2 Score negativo
+        if scores[model_name] < 0:
+            continue
+        
+        accuracy = np.mean((pred > test_y.iloc[-1]) == (test_y.values > test_y.iloc[-1]))
+        if accuracy >= 0.6:
+            valid_models += 1
+            if pred[-1] > test_y.iloc[-1]:
+                buy_votes += 1
+
+    if valid_models == 0:
+        return "Sem recomendação para o ativo"
+    
+    return 'COMPRA' if buy_votes > valid_models / 2 else 'VENDA'
+
+def predict_probability(predictions, test_y):
+    above_last_close = sum(1 for pred in predictions if pred[-1] > test_y.iloc[-1])
+    total_models = len(predictions)
+    return above_last_close / total_models
 
 def test_all_models(train_x, test_x, train_y, test_y):
-    linear_regression_prediction = linear_regression_test(train_x, test_x, train_y, test_y)
-    random_forest_prediction = random_forest_test(train_x, test_x, train_y, test_y)
-    support_vector_prediction = support_vector_test(train_x, test_x, train_y, test_y)
-    gradient_boost_prediction = gradient_boost_test(train_x, test_x, train_y, test_y)
-    ridge_prediction = ridge_test(train_x, test_x, train_y, test_y)
-    lasso_prediction = lasso_test(train_x, test_x, train_y, test_y)
+    models = [
+        LinearRegression(),
+        RandomForestRegressor(),
+        SVR(),
+        GradientBoostingRegressor(),
+    ]
 
-    tuned_linear_regression_prediction = tuned_linear_regression_test(train_x, test_x, train_y, test_y)
-    tuned_random_forest_prediction = tuned_random_forest_test(train_x, test_x, train_y, test_y)
-    tuned_support_vector_prediction = tuned_support_vector_test(train_x, test_x, train_y, test_y)
-    tuned_gradient_boost_prediction = tuned_gradient_boost_test(train_x, test_x, train_y, test_y)
-    tuned_ridge_prediction = tuned_ridge_test(train_x, test_x, train_y, test_y)
-    tuned_lasso_prediction = tuned_lasso_test(train_x, test_x, train_y, test_y)
+    trained_models = []
 
-    return linear_regression_prediction, random_forest_prediction, support_vector_prediction, \
-        gradient_boost_prediction, ridge_prediction, lasso_prediction, tuned_linear_regression_prediction, \
-        tuned_random_forest_prediction, tuned_support_vector_prediction, tuned_gradient_boost_prediction, \
-        tuned_ridge_prediction, tuned_lasso_prediction
-
-crypto_symbols = [
-    'ADA',
-    'AXS',
-    'BNB',
-    'BTC',
-    'BUSD',
-    'C98',
-    'CHZ',
-    'DOGE',
-    'DOT',
-    'ENJ',
-    'ETH',
-    'FIS',
-    'LINK',
-    'LTC',
-    'MATIC',
-    'SHIB',
-    'SOL',
-    'USDT',
-    'WIN',
-    'XRP',
-]
-
-def predict_for_all_symbols():
-    model_folder = 'trained_models'
-    create_directory(model_folder)
+    model_names = ["linear_regression", "random_forest", "support_vector", "gradient_boost", "ridge", "lasso"]
+    predictions = []
 
     for symbol in crypto_symbols:
         train_x, test_x, train_y, test_y = prepare_data(symbol)
-
         print(f'Testing for: {symbol}BRL')
-        predictions = test_all_models(train_x, test_x, train_y, test_y)
-        print()
 
-        models = {
-            'linear_regression': predictions[0],
-            'random_forest': predictions[1],
-            'support_vector': predictions[2],
-            'gradient_boost': predictions[3],
-            'ridge': predictions[4],
-            'lasso': predictions[5],
+        trained_models = test_all_models(train_x, test_x, train_y, test_y)
 
-            'tuned_linear_regression': predictions[6],
-            'tuned_random_forest': predictions[7],
-            'tuned_support_vector': predictions[8],
-            'tuned_gradient_boost': predictions[9],
-            'tuned_ridge': predictions[10],
-            'tuned_lasso': predictions[11],
-        }
+    for model, name in zip(models, model_names):
+        pred, score, mae = evaluate_model(model, train_x, test_x, train_y, test_y)
+        logging.info(f'{name} score: {score:.6%}')
+        logging.info(f'MAE: {mae}')
+        predictions.append(pred)
+        trained_models.append(model)
 
-        symbol_model_folder = os.path.join(model_folder, symbol)
-        create_directory(symbol_model_folder)
+    for model in tuned_models:
+        pred = model.predict(test_x)
+        predictions.append(pred)
+        trained_models.append(model)
 
-        for model_name, model in models.items():
-            model_file_name = os.path.join(symbol_model_folder, f'{symbol}_{model_name}.pkl')
-            save_model(model, model_file_name)
+    tuned_models = tune_all_models(train_x, train_y)
+    tuned_predictions = evaluate_tuned_models(tuned_models, train_x, test_x, train_y, test_y)
 
-        aux_dataframe = pd.DataFrame()
-        aux_dataframe['Open'] = test_x['Open']
-        aux_dataframe['High'] = test_x['High']
-        aux_dataframe['Low'] = test_x['Low']
-        aux_dataframe['test_y (Close)'] = test_y
+    all_predictions = list(predictions.values()) + list(tuned_predictions.values())
+    decision_ensemble = ensemble_decision(all_predictions, test_y)
+    print(f'Ensemble Decision: {decision_ensemble}')
 
-        aux_dataframe['linear_regression'] = models['linear_regression']
-        aux_dataframe['tuned_linear_regression'] = models['tuned_linear_regression']
+    buy_probability = predict_probability(all_predictions, test_y)
+    print(f"Probability of an uptrend based on all models: {buy_probability:.2%}")
 
-        aux_dataframe['random_forest'] = models['random_forest']
-        aux_dataframe['tuned_random_forest'] = models['tuned_random_forest']
+    return trained_models
 
-        aux_dataframe['support_vector'] = models['support_vector']
-        aux_dataframe['tuned_support_vector'] = models['tuned_support_vector']
+crypto_symbols = ['ADA', 'AXS', 'BNB', 'BTC',
+                  'BUSD', 'C98', 'CHZ', 'DOGE',
+                  'DOT', 'ENJ', 'ETH', 'FIS',
+                  'LINK', 'LTC', 'MATIC', 'SHIB',
+                  'SOL', 'USDT', 'WIN', 'XRP']
+        
+def predict_for_all_symbols():
+    symbols = get_symbols()
+    recommendations = {}    
+    for symbol in symbols:
+        print(f'\nAtivo: {symbol}...')
+        train_x, test_x, train_y, test_y = prepare_data(symbol)
+        tuned_models = tune_all_models(train_x, train_y)
+        predictions, scores, maes = evaluate_tuned_models(tuned_models, train_x, test_x, train_y, test_y)
+        valid_models = [model for model, score in scores.items() if score > 0 and maes[model] < 10]
+        valid_predictions = {model: predictions[model] for model in valid_models}
+        decision_ensemble = ensemble_decision(valid_predictions, scores, test_y)
+        print(f'Recomendação da Smart Finance para {symbol}BRL: {decision_ensemble}\n')
+        recommendations[symbol] = decision_ensemble
+    return recommendations
 
-        aux_dataframe['gradient_boost'] = models['gradient_boost']
-        aux_dataframe['tuned_gradient_boost'] = models['tuned_gradient_boost']
-
-        aux_dataframe['ridge'] = models['ridge']
-        aux_dataframe['tuned_ridge'] = models['tuned_ridge']
-
-        aux_dataframe['lasso'] = models['lasso']
-        aux_dataframe['tuned_lasso'] = models['tuned_lasso']
-
-        print(aux_dataframe)
-        print('-' * 60)
+if __name__ == "__main__":
+    predict_for_all_symbols()

@@ -1,55 +1,48 @@
-from sklearn.metrics import r2_score
-from sklearn.linear_model import LinearRegression
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.svm import SVR
-from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.linear_model import Ridge
-from sklearn.linear_model import Lasso
+from sklearn.metrics import r2_score, mean_absolute_error
+import logging
 
-def linear_regression_test(train_x, test_x, train_y, test_y):
-    model = LinearRegression()
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+def evaluate_model(model, train_x, test_x, train_y, test_y):
+    logging.info(f'Avaliando modelo: {model}')    
     model.fit(train_x, train_y)
     prediction = model.predict(test_x)
 
-    print(f'Linear Regression score: {r2_score(test_y, prediction):.6%}')
-    return prediction
+    score = r2_score(test_y, prediction)
+    mae = mean_absolute_error(test_y, prediction)   
 
-def random_forest_test(train_x, test_x, train_y, test_y):
-    model = RandomForestRegressor()
-    model.fit(train_x, train_y)
-    prediction = model.predict(test_x)
+    return prediction, score, mae
 
-    print(f'Random Forest score: {r2_score(test_y, prediction):.6%}')
-    return prediction
+def evaluate_tuned_models(tuned_models, train_x, test_x, train_y, test_y):
+    predictions = {}
+    scores = {}
+    maes = {}
+    for model_name, model in tuned_models.items():
+        pred, score, mae = evaluate_model(model, train_x, test_x, train_y, test_y)
+        print(f"{model_name} - R2 Score: {score:.6%}, MAE: {mae}")
+        predictions[model_name] = pred
+        scores[model_name] = score
+        maes[model_name] = mae
+    return predictions, scores, maes
 
-def support_vector_test(train_x, test_x, train_y, test_y):
-    model = SVR()
-    model.fit(train_x, train_y)
-    prediction = model.predict(test_x)
 
-    print(f'SVR score: {r2_score(test_y, prediction):.6%}')
-    return prediction
+"""def evaluate_tuned_models(tuned_models, train_x, test_x, train_y, test_y):
+    predictions = {}
+    for model_name, model in tuned_models.items():
+        pred, score, mae = evaluate_model(model, train_x, test_x, train_y, test_y)
+        print(f"{model_name} - R2 Score: {score:.6%}, MAE: {mae}")
+        predictions[model_name] = pred
+    return predictions """
 
-def gradient_boost_test(train_x, test_x, train_y, test_y):
-    model = GradientBoostingRegressor()
-    model.fit(train_x, train_y)
-    prediction = model.predict(test_x)
+"""
+def is_good_accuracy(score):
+    # Defina um limite de precisão. Este é apenas um exemplo, ajuste conforme necessário.
+    accuracy_threshold = 0.7
+    return score > accuracy_threshold
 
-    print(f'Gradient Boost score: {r2_score(test_y, prediction):.6%}')
-    return prediction
-
-def ridge_test(train_x, test_x, train_y, test_y):
-    model = Ridge()
-    model.fit(train_x, train_y)
-    prediction = model.predict(test_x)
-
-    print(f'Ridge score: {r2_score(test_y, prediction):.6%}')
-    return prediction
-
-def lasso_test(train_x, test_x, train_y, test_y):
-    model = Lasso(max_iter=10000)
-    model.fit(train_x, train_y)
-    prediction = model.predict(test_x)
-
-    print(f'Lasso score: {r2_score(test_y, prediction):.6%}')
-    return prediction
+def is_recommended_score(score, mae):
+    RECOMMENDED_R2 = 0.7
+    RECOMMENDED_MAE = 100  # Exemplo, ajuste conforme necessário.
+    
+    return score > RECOMMENDED_R2 and mae < RECOMMENDED_MAE
+"""
