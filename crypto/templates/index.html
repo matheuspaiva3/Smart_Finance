@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Smart Finance
+{% endblock %}
+
+{% block content %}
+<div class="page">
+    <header>
+        <!-- Parte da página que contém o header -->
+        <div class="header">
+            <img src="{% static 'images/logo.svg' %}" alt="logo do site" />
+            <div class="name">Smart Finance</div>
+            <nav>
+                <ul>
+                    <li>Sobre nós</li>
+                    <li>Suporte</li>
+                    <li>Termos de uso</li>
+                </ul>
+            </nav>
+        </div>
+        <!-- Parte abaixo do header que contém os textos da página e os botões de entrar e cadastro -->
+        <div class="box">
+            <h1>Impulsione seus investimentos</h1>
+            <p>
+                Ajudamos você a lidar da melhor maneira possível com seus
+                investimentos
+            </p>
+            <div class="button">
+                <a href="{% url 'crypto:login' %}">
+                    <button class="blue_b" type="button">Entrar</button>
+                </a>
+                <a href="{% url 'crypto:create_account' %}">
+                    <button class="white_b" type="button">Cadastrar</button>
+                </a>
+            </div>
+        </div>
+    </header>
+    <!-- Parte lateral direita da página, com os 2 quadrados, branco e preto -->
+    <div class="square">
+        <ul>
+            <li class="black"></li>
+            <li class="white"></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

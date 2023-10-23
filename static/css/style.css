@@ -3,21 +3,26 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 body {
   background: black;
   font-family: "Inter", sans-serif;
 }
+
 header {
   color: #ffffff;
 }
+
 li {
   list-style: none;
 }
+
 .header {
   display: flex;
   align-items: center;
   margin: 41px 0 422px 97px;
 }
+
 .name {
   margin: 0px 45px 0 16px;
   background-color: #2e2e2e;
@@ -30,22 +35,27 @@ li {
   font-size: 24px;
   line-height: 38px;
 }
+
 .name:hover {
   background-color: #858cec;
 }
+
 ul {
   display: flex;
   gap: 45px;
 }
+
 li:hover {
   color: #858cec;
 }
+
 .square ul {
   display: flex;
   flex-direction: column;
   gap: 66px;
   margin-right: 100px;
 }
+
 .black,
 .white {
   background-color: #ffffff;
@@ -54,19 +64,23 @@ li:hover {
   height: 535px;
   border-radius: 50px;
 }
+
 .black {
   background-color: #2e2e2e;
   margin-top: 66px;
 }
+
 .page {
   display: flex;
   justify-content: space-between;
 }
+
 h1,
 p,
 button {
   color: #ffffff;
 }
+
 .box {
   display: flex;
   flex-direction: column;
@@ -74,20 +88,24 @@ button {
   margin-left: 97px;
   width: 794px;
 }
+
 h1 {
   font-size: 96px;
   line-height: 116px;
 }
+
 p {
   font-size: 24px;
   line-height: 29px;
   width: 506px;
 }
+
 .button {
   display: flex;
   gap: 26px;
   margin-top: 20px;
 }
+
 button {
   width: 192px;
   height: 78px;
@@ -98,24 +116,30 @@ button {
   border-style: none;
   cursor: pointer;
 }
+
 .white_b:hover {
   background-color: #ffffff94;
 }
+
 .white_b {
   background-color: #ffffff;
   color: black;
 }
+
 .blue_b:hover {
   background-color: #6b73dd;
 }
+
 .blue_b {
   background-color: #858cec;
 }
+
 .header2 {
   display: flex;
   align-items: center;
   margin: 41px 0 0px 97px;
 }
+
 form {
   font-family: "Inter", sans-serif;
   width: 642px;
@@ -125,14 +149,17 @@ form {
   background: #2e2e2e;
   padding: 56px;
 }
+
 fieldset {
   border: none;
 }
+
 .fieldset-wrapper {
   display: flex;
   flex-direction: column;
   gap: 35px;
 }
+
 legend {
   width: 218px;
   height: 74px;
@@ -143,6 +170,7 @@ legend {
   font-size: 64px;
   font-weight: 700;
 }
+
 input {
   width: 100%;
   height: 78px;
@@ -155,53 +183,65 @@ input {
   font-size: 20px;
   padding: 15px;
 }
+
 label {
   color: #ffffff;
   font-size: 24px;
   font-family: "Inter", sans-serif;
   font-weight: 700;
 }
-.buttons-login, .buttons-create {
+
+.buttons-login,
+.buttons-create {
   display: flex;
   justify-content: space-around;
 }
-.buttons-login{
+
+.buttons-login {
   margin-top: 140px;
 }
-button{
+
+button {
   font-family: "Inter", sans-serif;
 }
+
 input:invalid {
   border: #000000 solid 3px;
 }
+
 input:focus {
   border: #6b73dd solid 3px;
 }
+
 button:focus {
   outline: none;
   border: #6b73dd solid 3px;
 }
-.checkbox-layout{
+
+.checkbox-layout {
   position: relative;
   display: flex;
   align-items: flex-end;
   justify-content: space-around;
   margin-top: 30px;
 }
-.checkbox-layout input{
+
+.checkbox-layout input {
   width: 30px;
   height: 30px;
   border-radius: 5px;
   background: #d9d9d9;
   opacity: 0;
-  position: absolute; 
+  position: absolute;
 }
+
 .checkbox-layout label {
   display: flex;
   align-items: center;
   gap: 8px;
 }
-.checkbox-layout label::before{
+
+.checkbox-layout label::before {
   content: "";
   display: block;
   width: 30px;
@@ -209,11 +249,13 @@ button:focus {
   border-radius: 8px;
   border: #fff solid 2px;
 }
-.checkbox-layout input:checked + label::before{
+
+.checkbox-layout input:checked+label::before {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E%3Cg clip-path='url(%23clip0_2340_23)'%3E%3Cpath d='M9 16.17L4.83 12L3.41 13.41L9 19L21 7L19.59 5.59L9 16.17Z' fill='%2342D3FF'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_2340_23'%3E%3Crect width='24' height='24' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: center;
 }
-.checkbox-layout input:focus + label::before{
-  border: #6b73dd solid 3px; 
+
+.checkbox-layout input:focus+label::before {
+  border: #6b73dd solid 3px;
 }
