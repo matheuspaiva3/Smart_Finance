@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.views.generic import TemplateView
 
 
@@ -12,3 +11,7 @@ class CreateAccount(TemplateView):
 
 class Login(TemplateView):
     template_name = 'login.html'
+
+
+class Assets(TemplateView):
+    template_name = 'assets.html'

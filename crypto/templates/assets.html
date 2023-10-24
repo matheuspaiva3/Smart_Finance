@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+Smart Finance - ativos
+{% endblock %}
+
+{% block content %}
+<header>
+    <div class="header-assets">
+        <img src="{% static 'images/logo.svg' %}" alt="logo do site" />
+        <div class="name">Smart Finance</div>
+        <nav>
+            <ul>
+                <li>Sobre nós</li>
+                <li>Suporte</li>
+                <li>Termos de uso</li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<main>
+    <div class="infos">
+        <h3>Ativos com informações disponíveis para compra ou venda:</h3>
+    </div>
+    <div class="assets">
+        <div class="asset">
+            <h3>Ativo</h3>
+            <p id="price">Preço</p>
+            <p id="average">Média</p>
+            <p id="BuyOrSell">Compra</p>
+        </div>
+        <div class="asset">
+            <h3>Ativo</h3>
+            <p id="price">Preço</p>
+            <p id="average">Média</p>
+            <p id="BuyOrSell">Venda</p>
+        </div>
+        <div class="asset">
+            <h3>Ativo</h3>
+            <p id="price">Preço</p>
+            <p id="average">Média</p>
+            <p id="BuyOrSell">Compra</p>
+        </div>
+        <div class="asset">
+            <h3>Ativo</h3>
+            <p id="price">Preço</p>
+            <p id="average">Média</p>
+            <p id="BuyOrSell">Venda</p>
+        </div>
+        <div class="arrow">
+            <img src="{% static 'images/Arrow 1.svg' %}" alt="Flecha para rolar as opções de ativo">
+        </div>
+    </div>
+</main>
+{% endblock %}

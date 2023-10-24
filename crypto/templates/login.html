@@ -27,7 +27,9 @@ Smart Finance - login
                 </div>
                 <div class="input-wrapper">
                     <div class="buttons-login">
-                        <button class="blue_b" type="submit">Entrar</button>
+                        <a href="{% url 'crypto:assets' %}">
+                            <button class="blue_b" type="button">Entrar</button>
+                        </a>
                         <a href="{% url 'crypto:index' %}">
                             <button class="white_b" type="button">Voltar</button>
                         </a>
