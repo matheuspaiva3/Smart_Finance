@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from smartfinance.local_settings import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -81,6 +82,7 @@ DATABASES = {
     }
 }
 
+MONGO_URI = f'mongodb+srv://{user}:{password}@cluster0.pkrgor8.mongodb.net/?retryWrites=true&w=majority'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

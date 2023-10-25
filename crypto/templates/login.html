@@ -13,23 +13,25 @@ Smart Finance - login
             <div class="name">Smart Finance</div>
         </div>
     </header>
-    <form id="my-form">
+    <form id="my-form" method="post">
+        {% csrf_token %}
         <fieldset>
             <div class="fieldset-wrapper">
                 <legend>Entrar</legend>
                 <div class="input-wrapper">
                     <label for="email">Email</label>
-                    <input type="email" name="" id="email" required>
+                    <input type="email" name="email" id="email" required value="{{ email }}">
                 </div>
                 <div class="input-wrapper">
                     <label for="password">Senha</label>
-                    <input type="password" name="" id="password" required minlength="8">
+                    <input type="password" name="password" id="password" required minlength="8">
                 </div>
+                {% if error %}
+                    <p>{{ error }}</p>
+                {% endif %}
                 <div class="input-wrapper">
                     <div class="buttons-login">
-                        <a href="{% url 'crypto:assets' %}">
-                            <button class="blue_b" type="button">Entrar</button>
-                        </a>
+                        <button class="blue_b" type="submit">Entrar</button>
                         <a href="{% url 'crypto:index' %}">
                             <button class="white_b" type="button">Voltar</button>
                         </a>
