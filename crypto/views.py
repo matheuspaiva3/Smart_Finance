@@ -20,14 +20,21 @@ class CreateAccount(TemplateView):
         password = self.request.POST.get('password')
         confirm_password = self.request.POST.get('confirm-password')
 
-        if password != confirm_password:
-            return render(request, self.template_name, {'error': 'As senhas são diferentes', 'email': email})
-
         mongo_client = MongoClient(settings.MONGO_URI)
         db = mongo_client.Data
         users_collection = db.UsersAccounts
-        users_collection.insert_one({'email': email, 'password': password})
-        mongo_client.close()
+
+        if users_collection.find_one({'email': email}):
+            mongo_client.close()
+            return render(request, self.template_name, {'error': 'E-mail já cadastrado', 'email': email})
+
+        elif password != confirm_password:
+            mongo_client.close()
+            return render(request, self.template_name, {'error': 'As senhas são diferentes', 'email': email})
+
+        else:
+            users_collection.insert_one({'email': email, 'password': password})
+            mongo_client.close()
 
         login_url = reverse('crypto:login') + f'?email={email}'
         return redirect(login_url)
@@ -49,13 +56,13 @@ class Login(TemplateView):
         db = mongo_client.Data
         users_collection = db.UsersAccounts
         user = users_collection.find_one({'email': email, 'password': password})
-        mongo_client.close()
 
         if user:
+            mongo_client.close()
             return redirect(reverse('crypto:assets'))
-        else:
-            error = 'E-mail ou senha inválidos'
-            return render(request, self.template_name, {'error': error, 'email': email})
+
+        mongo_client.close()
+        return render(request, self.template_name, {'error': 'E-mail não cadastrado ou senha inválida', 'email': email})
 
 
 class Assets(TemplateView):
