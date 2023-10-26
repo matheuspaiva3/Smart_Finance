@@ -57,5 +57,6 @@ class Login(TemplateView):
             error = 'E-mail ou senha inválidos'
             return render(request, self.template_name, {'error': error, 'email': email})
 
+
 class Assets(TemplateView):
     template_name = 'assets.html'

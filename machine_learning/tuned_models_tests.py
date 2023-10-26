@@ -1,9 +1,9 @@
+import logging
 from sklearn.metrics import r2_score
 from models_tuning import tune_linear_regression
 from models_tuning import tune_random_forest
 from models_tuning import tune_svr
 from models_tuning import tune_gradient_boost
-import logging
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
