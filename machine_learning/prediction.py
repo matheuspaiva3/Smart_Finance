@@ -1,15 +1,12 @@
-import os
 import logging
 import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
-from sklearn.svm import SVR
 from scipy.stats import norm
 from data_processing import prepare_data, get_symbols
 from models_tuning import tune_all_models
 from models_tests import evaluate_tuned_models
 from models_tests import evaluate_model
-from save_models import *
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -51,17 +48,16 @@ def test_all_models(train_x, test_x, train_y, test_y):
     models = [
         LinearRegression(),
         RandomForestRegressor(),
-        SVR(),
         GradientBoostingRegressor(),
     ]
 
     trained_models = []
-    model_names = ["linear_regression", "random_forest", "support_vector", "gradient_boost"]
+    model_names = ["linear_regression", "random_forest", "gradient_boost"]
     predictions = []
 
     for symbol in crypto_symbols:
         train_x, test_x, train_y, test_y = prepare_data(symbol)
-        print(f'Testing for: {symbol}BRL...')
+        print(f'Testando para: {symbol}BRL...')
 
         trained_models = test_all_models(train_x, test_x, train_y, test_y)
 
@@ -103,9 +99,6 @@ def predict_for_all_symbols():
     symbols = get_symbols()
     recommendations = {}
 
-    models_folder = 'trained_models'
-    create_directory(models_folder)
-
     for symbol in symbols:
         print(f'\nAtivo: {symbol}...')
 
@@ -117,13 +110,6 @@ def predict_for_all_symbols():
 
         valid_predictions = {model: predictions[model] for model in valid_models}
         decision_ensemble = ensemble_decision(valid_predictions, scores, test_y)
-
-        symbol_model_folder = os.path.join(models_folder, symbol)
-        create_directory(symbol_model_folder)
-
-        for model_name, model in valid_predictions.items():
-            model_file_name = os.path.join(symbol_model_folder, f'{symbol}_{model_name}.pkl')
-            save_model(model, model_file_name)
 
         print(f'Recomendação da Smart Finance para {symbol}BRL: {decision_ensemble}\n')
         recommendations[symbol] = decision_ensemble

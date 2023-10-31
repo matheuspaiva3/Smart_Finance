@@ -1,7 +1,6 @@
 import logging
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
-from sklearn.svm import SVR
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.preprocessing import StandardScaler
 
@@ -27,8 +26,6 @@ def tune_all_models(train_x, train_y):
     tuned_models["Linear Regression"] = tune_model(LinearRegression(), train_x, train_y, {'fit_intercept': [True, False]}, 2)
 
     tuned_models["Random Forest"] = tune_model(RandomForestRegressor(), train_x, train_y, {'max_depth': [None, 10, 20], 'n_estimators': [50, 100, 150]}, 2)
-
-    tuned_models["SVR"] = tune_model(SVR(), train_x, train_y, {'C': [1, 10], 'epsilon': [0.1, 0.2], 'kernel': ['linear', 'rbf']}, 1)
 
     tuned_models["Gradient Boost"] = tune_model(GradientBoostingRegressor(), train_x, train_y, {'max_depth': [3, 4, 5], 'n_estimators': [50, 100, 150]}, 1)
 

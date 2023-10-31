@@ -21,7 +21,7 @@ def evaluate_tuned_models(tuned_models, train_x, test_x, train_y, test_y):
 
     for model_name, model in tuned_models.items():
         pred, score, mae = evaluate_model(model, train_x, test_x, train_y, test_y)
-        print(f"{model_name} - R2 Score: {score:.6%}, MAE: {mae}")
+        print(f"RESULTADO - {model_name} - R2 Score: {score:.6%}, MAE: {mae}")
 
         predictions[model_name] = pred
         scores[model_name] = score
