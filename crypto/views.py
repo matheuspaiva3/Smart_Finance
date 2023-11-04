@@ -3,6 +3,7 @@ from django.shortcuts import render
 from pymongo import MongoClient
 from django.conf import settings
 from django.shortcuts import redirect, reverse
+from machine_learning.main import predict_for_all_symbols
 
 
 class Index(TemplateView):
@@ -67,3 +68,13 @@ class Login(TemplateView):
 
 class Assets(TemplateView):
     template_name = 'assets.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        recommendations = predict_for_all_symbols()
+
+        context['recommendations_list'] = [
+            (symbol, recommendation) for symbol, recommendation in recommendations.items()
+        ]
+
+        return context

@@ -3,10 +3,10 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from scipy.stats import norm
-from data_processing import prepare_data, get_symbols
-from models_tuning import tune_all_models
-from models_tests import evaluate_tuned_models
-from models_tests import evaluate_model
+from .data_processing import prepare_data, get_symbols
+from .models_tuning import tune_all_models
+from .models_tests import evaluate_tuned_models
+from .models_tests import evaluate_model
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -115,6 +115,3 @@ def predict_for_all_symbols():
         recommendations[symbol] = decision_ensemble
 
     return recommendations
-
-if __name__ == "__main__":
-    predict_for_all_symbols()
