@@ -3,7 +3,9 @@
   padding: 0;
   box-sizing: border-box;
 }
-
+:root{
+  font-size: 62.5%;
+}
 body {
   background: black;
   font-family: "Inter", sans-serif;
@@ -20,20 +22,20 @@ li {
 .header {
   display: flex;
   align-items: center;
-  margin: 41px 0 422px 97px;
+  margin: 4.1rem 0 42.2rem 9.7rem;
 }
 
 .name {
-  margin: 0px 45px 0 16px;
+  margin: 0rem 4.5rem 0rem 1.6rem;
   background-color: #2e2e2e;
-  width: 230px;
-  height: 74px;
+  width: 23.0rem;
+  height: 7.4rem;
   border-radius: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
-  line-height: 38px;
+  font-size: 2.4rem;
+  line-height: 3.8rem;
 }
 
 .name:hover {
@@ -42,7 +44,7 @@ li {
 
 ul {
   display: flex;
-  gap: 45px;
+  gap: 4.5rem;
 }
 
 li:hover {
@@ -52,22 +54,22 @@ li:hover {
 .square ul {
   display: flex;
   flex-direction: column;
-  gap: 66px;
-  margin-right: 100px;
+  gap: 6.6rem;
+  margin-right: 10.0rem;
 }
 
 .black,
 .white {
   background-color: #ffffff;
-  gap: 20px;
-  width: 535px;
-  height: 535px;
+  gap: 2.0rem;
+  width: 53.5rem;
+  height: 53.5rem;
   border-radius: 50px;
 }
 
 .black {
   background-color: #2e2e2e;
-  margin-top: 66px;
+  margin-top: 6.6rem;
 }
 
 .page {
@@ -84,34 +86,35 @@ button {
 .box {
   display: flex;
   flex-direction: column;
-  gap: 58px;
-  margin-left: 97px;
-  width: 794px;
+  gap: 5.8rem;
+  margin-left: 9.7rem;
+  width: 79.4rem;
 }
 
 h1 {
-  font-size: 96px;
-  line-height: 116px;
+  font-size: 9.6rem;
+  line-height: 11.6rem;
 }
 
 p {
-  font-size: 24px;
-  line-height: 29px;
-  width: 506px;
+  font-size: 2.4rem;
+  line-height: 2.9rem;
+  width: 50.6rem;
+  color: #ffffff;
 }
 
 .button {
   display: flex;
-  gap: 26px;
-  margin-top: 20px;
+  gap: 2.6rem;
+  margin-top: 2.0rem;
 }
 
 button {
-  width: 192px;
-  height: 78px;
+  width: 19.2rem;
+  height: 7.8rem;
   border-radius: 15px;
   color: #fff;
-  font-size: 36px;
+  font-size: 3.6rem;
   line-height: normal;
   border-style: none;
   cursor: pointer;
@@ -137,17 +140,17 @@ button {
 .header2 {
   display: flex;
   align-items: center;
-  margin: 41px 0 0px 97px;
+  margin: 4.1rem 0 0px 9.7rem;
 }
 
 form {
   font-family: "Inter", sans-serif;
-  width: 642px;
-  height: 786px;
-  margin: 48px auto 171px;
+  width: 64.2rem;
+  height: 78.6rem;
+  margin: 4.8rem auto 17.1rem;
   border-radius: 50px;
   background: #2e2e2e;
-  padding: 56px;
+  padding: 5.6rem;
 }
 
 fieldset {
@@ -157,36 +160,36 @@ fieldset {
 .fieldset-wrapper {
   display: flex;
   flex-direction: column;
-  gap: 35px;
+  gap: 3.5rem;
 }
 
 legend {
-  width: 218px;
-  height: 74px;
+  width: 21.8rem;
+  height: 7.4rem;
   font-family: "Inter", sans-serif;
   color: #fff;
   text-align: center;
   font-family: Inter;
-  font-size: 64px;
+  font-size: 6.4rem;
   font-weight: 700;
 }
 
 input {
   width: 100%;
-  height: 78px;
+  height: 7.8rem;
   border-radius: 15px;
   background: #fff;
   border: none;
   outline: none;
-  margin-top: 8px;
+  margin-top: 0.8rem;
   font-family: "Inter", sans-serif;
-  font-size: 20px;
-  padding: 15px;
+  font-size: 2.0rem;
+  padding: 1.5rem;
 }
 
 label {
   color: #ffffff;
-  font-size: 24px;
+  font-size: 2.4rem;
   font-family: "Inter", sans-serif;
   font-weight: 700;
 }
@@ -198,7 +201,7 @@ label {
 }
 
 .buttons-login {
-  margin-top: 140px;
+  margin-top: 14.0rem;
 }
 
 button {
@@ -223,12 +226,12 @@ button:focus {
   display: flex;
   align-items: flex-end;
   justify-content: space-around;
-  margin-top: 30px;
+  margin-top: 3.0rem;
 }
 
 .checkbox-layout input {
-  width: 30px;
-  height: 30px;
+  width: 3.0rem;
+  height: 3.0rem;
   border-radius: 5px;
   background: #d9d9d9;
   opacity: 0;
@@ -238,14 +241,14 @@ button:focus {
 .checkbox-layout label {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.8rem;
 }
 
 .checkbox-layout label::before {
   content: "";
   display: block;
-  width: 30px;
-  height: 30px;
+  width: 3.0rem;
+  height: 3.0rem;
   border-radius: 8px;
   border: #fff solid 2px;
 }
@@ -263,34 +266,34 @@ button:focus {
 .header-assets {
   display: flex;
   align-items: center;
-  width: 1346px;
-  height: 88px;
+  width: 134.6rem;
+  height: 8.8rem;
   flex-shrink: 0;
   border-radius: 15px;
   background: #d9d9d9;
-  margin: 29px auto 129px;
+  margin: 2.9rem auto 12.9rem;
 }
 
 .header-assets img {
-  margin: 20px;
+  margin: 2.0rem;
   width: 5%;
 }
 
 .header-assets nav {
-  margin-left: 580px;
+  margin-left: 58.0rem;
 }
 
 .infos {
-  width: 741px;
-  height: 186px;
+  width: 74.1rem;
+  height: 18.6rem;
   flex-shrink: 0;
   margin: auto;
   color: #fff;
   text-align: center;
   font-family: Inter;
-  font-size: 32px;
+  font-size: 3.2rem;
   font-weight: 700;
-  margin-bottom: 87px;
+  margin-bottom: 8.7rem;
 }
 
 .assets {
@@ -303,34 +306,33 @@ button:focus {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 30px;
+  gap: 3.0rem;
 
-  width: 262px;
-  height: 433px;
+  width: 26.2rem;
+  height: 43.3re,;
   flex-shrink: 0;
   border-radius: 50px;
   background: #2e2e2e;
-  padding: 41px 34px;
+  padding: 4.1rem 3.4rem;
   color: #858cec;
 
   text-align: center;
   font-family: Inter;
-  font-size: 32px;
+  font-size: 3.2rem;
   font-weight: 700;
 }
 
 p {
-  color: #000000;
+  color: #ffffff;
 }
-
 #BuyOrSell,
 #price,
 #average {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 140px;
-  height: 55px;
+  width: 14.0rem;
+  height: 5.5rem;
   flex-shrink: 0;
   border-radius: 15px;
   background: #858cec;
