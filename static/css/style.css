@@ -45,6 +45,7 @@ li {
 ul {
   display: flex;
   gap: 4.5rem;
+  font-size: 1.5rem;
 }
 
 li:hover {
@@ -201,7 +202,7 @@ label {
 }
 
 .buttons-login {
-  margin-top: 14.0rem;
+  margin-top: 8.0rem;
 }
 
 button {
@@ -298,7 +299,9 @@ button:focus {
 
 .assets {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 16rem;
   align-items: center;
 }
 
@@ -309,7 +312,7 @@ button:focus {
   gap: 3.0rem;
 
   width: 26.2rem;
-  height: 43.3re,;
+  height: 43.3rem;
   flex-shrink: 0;
   border-radius: 50px;
   background: #2e2e2e;
