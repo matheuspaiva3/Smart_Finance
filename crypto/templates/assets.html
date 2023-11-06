@@ -27,9 +27,9 @@ Smart Finance - ativos
         {% for symbol, price, recommendation, moving_average in recommendations %}
             <div class="asset">
                 <h3>{{ symbol }}</h3>
-                <p id="price">{{ price }}</p>
-                <p>{{ recommendation }}</p>
-                <p>{{ moving_average }}</p>
+                <p id="price">R${{ price }}</p>
+                <p id="price">{{ recommendation }}</p>
+                <p id="price">{{ moving_average }}</p>
             </div>
         {% endfor %}
     </div>
