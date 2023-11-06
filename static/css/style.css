@@ -66,6 +66,7 @@ li:hover {
   width: 53.5rem;
   height: 53.5rem;
   border-radius: 50px;
+  min-width: 53.5rem;
 }
 
 .black {
@@ -89,7 +90,7 @@ button {
   flex-direction: column;
   gap: 5.8rem;
   margin-left: 9.7rem;
-  width: 79.4rem;
+  min-width: 79.4rem;
 }
 
 h1 {
@@ -349,4 +350,28 @@ p {
 
 #BuyOrSell:hover {
   background: #6b73dd;
+}
+@media (max-width: 768px){
+
+  .square{
+    display: none;
+  }
+
+  *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: grid;
+    align-content: center;
+  }
+  a{
+    text-decoration: none;
+  }
+  .assets {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    gap: 10rem;
+    align-items: center;
+}
 }
