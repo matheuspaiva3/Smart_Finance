@@ -1,5 +1,5 @@
 import logging
-from .prediction import predict_for_all_symbols
+from prediction import predict_for_all_symbols
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 

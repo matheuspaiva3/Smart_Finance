@@ -3,7 +3,6 @@ from django.shortcuts import render
 from pymongo import MongoClient
 from django.conf import settings
 from django.shortcuts import redirect, reverse
-from machine_learning.main import predict_for_all_symbols
 
 
 class Index(TemplateView):
@@ -71,10 +70,22 @@ class Assets(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        recommendations = predict_for_all_symbols()
 
-        context['recommendations_list'] = [
-            (symbol, recommendation) for symbol, recommendation in recommendations.items()
-        ]
+        mongo_client = MongoClient(settings.MONGO_URI)
+        db = mongo_client.Data
+        ml_collection = db.MachineLearningData
 
+        recommendations = []
+
+        for mongo_set in ml_collection.find():
+            symbol = mongo_set['symbol']
+            price = mongo_set['price']
+            recommendation = mongo_set['recommendation']
+            moving_average = mongo_set['moving average']
+
+            recommendations.append((symbol, price, recommendation, moving_average))
+
+        context['recommendations'] = recommendations
+
+        mongo_client.close()
         return context

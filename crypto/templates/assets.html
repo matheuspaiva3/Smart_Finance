@@ -24,13 +24,14 @@ Smart Finance - ativos
         <h3>Ativos com informações disponíveis para compra ou venda:</h3>
     </div>
     <div class="assets">
-        {% for symbol, recommendation in recommendations_list %}
+        {% for symbol, price, recommendation, moving_average in recommendations %}
             <div class="asset">
                 <h3>{{ symbol }}</h3>
-                <p id="price">{{ recommendation }}</p>
+                <p id="price">{{ price }}</p>
+                <p>{{ recommendation }}</p>
+                <p>{{ moving_average }}</p>
             </div>
         {% endfor %}
-        
     </div>
 </main>
 {% endblock %}

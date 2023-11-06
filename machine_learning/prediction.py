@@ -3,10 +3,12 @@ import numpy as np
 from sklearn.linear_model import LinearRegression
 from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
 from scipy.stats import norm
-from .data_processing import prepare_data, get_symbols
-from .models_tuning import tune_all_models
-from .models_tests import evaluate_tuned_models
-from .models_tests import evaluate_model
+from data_processing import prepare_data, get_symbols
+from models_tuning import tune_all_models
+from models_tests import evaluate_tuned_models
+from models_tests import evaluate_model
+from pymongo import MongoClient
+from mongo_login import *
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -99,6 +101,11 @@ def predict_for_all_symbols():
     symbols = get_symbols()
     recommendations = {}
 
+    mongo_url = f'mongodb+srv://{user}:{password}@cluster0.pkrgor8.mongodb.net/?retryWrites=true&w=majority'
+    mongo_client = MongoClient(mongo_url)
+    db = mongo_client.Data
+    ml_collection = db.MachineLearningData
+
     for symbol in symbols:
         print(f'\nAtivo: {symbol}...')
 
@@ -114,4 +121,22 @@ def predict_for_all_symbols():
         print(f'Recomendação da Smart Finance para {symbol}BRL: {decision_ensemble}\n')
         recommendations[symbol] = decision_ensemble
 
+        moving_average = 0
+
+        for model_precision in scores.values():
+            moving_average += model_precision
+
+        moving_average = (moving_average / 3) * 100
+
+        ml_collection.update_one(
+            {'symbol': symbol},
+            {'$set': {
+                'recommendation': decision_ensemble,
+                'price': test_y.iloc[-1],
+                'moving average': f'{moving_average:.4f}%',
+            }},
+            upsert=True
+        )
+
+    mongo_client.close()
     return recommendations
