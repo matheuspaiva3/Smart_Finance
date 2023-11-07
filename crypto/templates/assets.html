@@ -6,32 +6,38 @@ Smart Finance - ativos
 {% endblock %}
 
 {% block content %}
-<header>
-    <div class="header-assets">
-        <img src="{% static 'images/logo.svg' %}" alt="logo do site" />
-        <div class="name">Smart Finance</div>
-        <nav>
-            <ul>
-                <li>Sobre nós</li>
-                <li>Suporte</li>
-                <li>Termos de uso</li>
-            </ul>
-        </nav>
-    </div>
-</header>
-<main>
-    <div class="infos">
-        <h3>Ativos com informações disponíveis para compra ou venda:</h3>
-    </div>
-    <div class="assets">
-        {% for symbol, price, recommendation, moving_average in recommendations %}
+<input type="checkbox" id="light">
+<label class="light-mode-toggler" for="light">
+    <div></div>
+</label>
+<div class="page2">
+    <header>
+        <div class="header-assets">
+            <img src="{% static 'images/logo.svg' %}" alt="logo do site" />
+            <div class="name">Smart Finance</div>
+            <nav>
+                <ul>
+                    <li>Sobre nós</li>
+                    <li>Suporte</li>
+                    <li>Termos de uso</li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="infos">
+            <h3>Ativos com informações disponíveis para compra ou venda:</h3>
+        </div>
+        <div class="assets">
+            {% for symbol, price, recommendation, moving_average in recommendations %}
             <div class="asset">
                 <h3>{{ symbol }}</h3>
                 <p id="price">R${{ price }}</p>
                 <p id="price">{{ recommendation }}</p>
                 <p id="price">{{ moving_average }}</p>
             </div>
-        {% endfor %}
-    </div>
-</main>
+            {% endfor %}
+        </div>
+    </main>
+</div>
 {% endblock %}

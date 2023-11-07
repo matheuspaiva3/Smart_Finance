@@ -6,13 +6,17 @@ Smart Finance
 {% endblock %}
 
 {% block content %}
+<input type="checkbox" id="light">
+<label class="light-mode-toggler" for="light">
+    <div></div>
+</label>
 <div class="page">
     <header>
         <!-- Parte da página que contém o header -->
         <div class="header">
             <img src="{% static 'images/logo.svg' %}" alt="logo do site" />
             <div class="name">Smart Finance</div>
-            <nav>
+            <nav id="navi">
                 <ul>
                     <li>Sobre nós</li>
                     <li>Suporte</li>
